@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,13 +25,19 @@ public class WerknemerController {
     }
     
     @GetMapping("werknemershierarchie")
-    ModelAndView findWerknemer() {
+    ModelAndView findDirecteur() {
 	ModelAndView modelAndView = new ModelAndView(WERKNEMER_VIEW);
 	Optional<Werknemer> optionalWerknemer = werknemerService.findWerknemerMetHoogsteTitel();
 	if (optionalWerknemer.isPresent()) {
 	    modelAndView.addObject(optionalWerknemer.get());
 	}
 	return modelAndView;
+    }
+    
+    @GetMapping("werknemershierarchie/{werknemer}")
+    ModelAndView findWerknemerById(@PathVariable Werknemer werknemer) {
+	// TODO afwerken
+	return null;
     }
     
     @GetMapping("jobtitels")
