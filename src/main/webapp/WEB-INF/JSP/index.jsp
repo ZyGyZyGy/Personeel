@@ -9,5 +9,6 @@
 <body>
 	<v:menu />
 	<h1>Personeel</h1>
+	<img alt="happy corporate people" src="<c:url value='/images/indexImage.jpg'/>" class="fullwidth">
 </body>
 </html>

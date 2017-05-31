@@ -1,5 +1,9 @@
 package be.vdab.repositories;
 
-public interface JobtitelRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import be.vdab.entities.Jobtitel;
+
+public interface JobtitelRepository extends JpaRepository<Jobtitel, Long>{
 
 }
