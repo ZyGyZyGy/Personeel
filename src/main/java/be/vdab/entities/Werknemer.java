@@ -17,8 +17,8 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -64,7 +64,7 @@ public class Werknemer implements Serializable {
     
     @NumberFormat(style = Style.NUMBER)
     @NotNull
-    @Min(0)
+    @DecimalMin("1")
     @Digits(integer = 10, fraction = 2)
     private BigDecimal salaris;
     
@@ -143,6 +143,8 @@ public class Werknemer implements Serializable {
 	this.salaris = salaris;
     }
     
-    
+    public long getVersie() {
+	return versie;
+    }
 
 }

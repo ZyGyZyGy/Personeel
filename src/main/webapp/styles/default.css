@@ -116,7 +116,7 @@ input[type='checkbox'], input[type='radio'] {
 	display: inline;
 }
 
-label span, .fout {
+label span, .fout, .success {
 	background-color: red;
 	border-bottom-right-radius: 0.5em;
 	border-top-left-radius: 0.5em;
@@ -128,8 +128,12 @@ label span, .fout {
 	font-weight: bold;
 }
 
-label span:empty, .fout:empty {
+label span:empty, .fout:empty, .success:empty {
 	display: none;
+}
+
+.success {
+	background-color: green;
 }
 
 .zonderbolletjes {
@@ -162,13 +166,10 @@ a {
 }
 
 dt {
-	clear:left;
-	float: left;
-	width: 15em;
+	margin-top: 10px;
 }
 
 dd {
-	margin-left: 15em;
 	font-weight: bold;
 }
 
