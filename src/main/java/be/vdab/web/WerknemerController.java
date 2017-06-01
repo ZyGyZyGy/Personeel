@@ -1,5 +1,6 @@
 package be.vdab.web;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -63,8 +64,6 @@ public class WerknemerController {
 	return modelAndView;
     }
     
-    // TODO: eigen annotation
-    
     @PostMapping("{werknemer}/opslag")
     String updateSalaris(@Valid Werknemer werknemer, BindingResult bindingResult,
 	    RedirectAttributes redirectAttributes) {
@@ -72,8 +71,9 @@ public class WerknemerController {
 	    return OPSLAG_VIEW;
 	}
 	long id = werknemer.getId();
+	BigDecimal opslag = werknemer.getOpslag();
 	try {
-	    werknemerService.update(werknemer);
+	    werknemerService.geefOpslag(id, opslag);
 	    redirectAttributes
 	    	.addAttribute("id", id)
 	    	.addAttribute("update", true);

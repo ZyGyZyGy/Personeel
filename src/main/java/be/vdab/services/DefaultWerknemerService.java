@@ -1,5 +1,6 @@
 package be.vdab.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,18 @@ public class DefaultWerknemerService implements WerknemerService {
     public Optional<Werknemer> findWerknemerMetHoogsteTitel() {
 	return Optional.ofNullable(
 		werknemerRepository.findByChefIsNull());
+    }
+    
+    @Override
+    public void geefOpslag(long id, BigDecimal opslag) {
+	Optional<Werknemer> optionalWerknemer
+		= Optional.ofNullable(werknemerRepository.findOne(id));
+	if (optionalWerknemer.isPresent()) {
+	    Werknemer werknemer = optionalWerknemer.get();
+	    BigDecimal huidigeSalaris = werknemer.getSalaris();
+	    werknemer.setSalaris(huidigeSalaris.add(opslag));
+	    werknemerRepository.save(werknemer);
+	}
     }
     
 }

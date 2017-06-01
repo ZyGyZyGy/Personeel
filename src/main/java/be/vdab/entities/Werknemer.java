@@ -16,6 +16,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -63,10 +64,13 @@ public class Werknemer implements Serializable {
     private Jobtitel jobtitel;
     
     @NumberFormat(style = Style.NUMBER)
+    private BigDecimal salaris;
+    
+    @Transient
     @NotNull
     @DecimalMin("1")
     @Digits(integer = 10, fraction = 2)
-    private BigDecimal salaris;
+    private BigDecimal opslag;
     
     @Version
     private long versie;
@@ -143,6 +147,14 @@ public class Werknemer implements Serializable {
 	this.salaris = salaris;
     }
     
+    public BigDecimal getOpslag() {
+        return opslag;
+    }
+
+    public void setOpslag(BigDecimal opslag) {
+        this.opslag = opslag;
+    }
+
     public long getVersie() {
 	return versie;
     }

@@ -24,9 +24,9 @@
 			</spring:url>
 			
 			<form:form action="${url}" commandName="werknemer" id="opslagForm">
-				<form:label path="salaris">Bedrag<form:errors path="salaris"/>
+				<form:label path="opslag">Bedrag<form:errors path="opslag"/>
 				</form:label>
-				<form:input path="salaris" autofocus="autofocus" required="required" type="number" min="1"/>
+				<form:input path="opslag" autofocus="autofocus" required="required" type="number"/>
 				<form:hidden path="versie"/>
 				<input type="submit" value="Opslag" id="submitknop">
 			</form:form>
