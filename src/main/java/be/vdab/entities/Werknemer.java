@@ -1,4 +1,4 @@
-package be.vdab.entities;
+package be.vdab.entities; 
 
 import java.io.Serializable;
 import java.math.BigDecimal;
