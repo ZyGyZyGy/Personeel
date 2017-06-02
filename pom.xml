@@ -54,28 +54,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		<dependency> <!-- JUnit -->
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>[4.12,]</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency> <!-- Mockito -->
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>[1.10, 1.99]</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency> <!-- Hibernate Validator -->
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>[5.4, 5.4.99]</version>
-		</dependency>
-		<dependency> <!-- CROSS-SITE SCRIPTING (XSS)  -->
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>[1.10,]</version>
-		</dependency>  
+		</dependency> 
 		<dependency> <!-- JPA -->
   			<groupId>org.springframework</groupId> 
   			<artifactId>spring-orm</artifactId> 
@@ -84,11 +67,6 @@
   			<groupId>org.hibernate</groupId> 
   			<artifactId>hibernate-core</artifactId> 
   			<version>[5.2.7, 5.2.99]</version> 
-		</dependency> 
-		<dependency> <!-- INTEGRATION TEST  -->
-	  		<groupId>org.springframework</groupId> 
-	  		<artifactId>spring-test</artifactId> 
-  			<scope>test</scope> 
 		</dependency>  
 		<dependency> <!-- Spring data  -->
   			<groupId>org.springframework.data</groupId> 

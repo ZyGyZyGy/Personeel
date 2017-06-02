@@ -18,8 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -27,7 +27,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "werknemers")
@@ -36,20 +35,22 @@ import com.sun.istack.NotNull;
 public class Werknemer implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    public interface Groep1 {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
-    @Length(min = 1, max = 50)
+    @NotBlank(groups = Groep1.class) 
+    @Length(min = 1, max = 50, groups = Groep1.class)
     private String familienaam;
 
-    @NotBlank
-    @Length(min = 1, max = 50)
+    @NotBlank(groups = Groep1.class) 
+    @Length(min = 1, max = 50, groups = Groep1.class)
     private String voornaam;
 
-    @Email
+    @Email(groups = Groep1.class) 
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -67,9 +68,8 @@ public class Werknemer implements Serializable {
     private BigDecimal salaris;
 
     @Transient
-    @NotNull
-    @DecimalMin("1")
-    @Digits(integer = 10, fraction = 2)
+    @NotNull(groups = Groep1.class) 
+    @Min(value = 1, groups = Groep1.class)
     private BigDecimal opslag;
 
     @Version
@@ -154,7 +154,7 @@ public class Werknemer implements Serializable {
     public long getVersie() {
 	return versie;
     }
-
+    
     @Override
     public int hashCode() {
 	final int prime = 31;

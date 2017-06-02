@@ -67,7 +67,7 @@ public class ControllersConfig extends WebMvcConfigurerAdapter {
     }
     
     @Override
-    public Validator getValidator() { 
+    public Validator getValidator() {
 	return new SpringValidatorAdapter(validatorFactory().getValidator());
     }
     

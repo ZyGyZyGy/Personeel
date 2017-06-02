@@ -16,7 +16,7 @@
 			<h1>Opslag voor ${werknemer.voornaam} ${werknemer.familienaam}</h1>
 			<dl>
 				<dt>Huidige salaris</dt>
-				<dd><spring:eval expression="werknemer.salaris"/></dd>
+				<dd>&euro;<spring:eval expression="werknemer.salaris"/></dd>
 			</dl>
 			
 			<spring:url value="/werknemers/{id}/opslag" var="url">
@@ -26,12 +26,12 @@
 			<form:form action="${url}" commandName="werknemer" id="opslagForm">
 				<form:label path="opslag">Bedrag<form:errors path="opslag"/>
 				</form:label>
-				<form:input path="opslag" autofocus="autofocus" required="required" type="number"/>
+				<form:input path="opslag" autofocus="autofocus" />
 				<form:hidden path="versie"/>
 				<input type="submit" value="Opslag" id="submitknop">
 			</form:form>
 			<script>
-				document.getElementById('filiaalform').onsubmit = function() {
+				document.getElementById('opslagForm').onsubmit = function() {
 					document.getElementById('submitknop').disabled = true;
 				};
 			</script>

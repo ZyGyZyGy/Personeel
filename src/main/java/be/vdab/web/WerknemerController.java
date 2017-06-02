@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,6 +25,7 @@ import be.vdab.services.WerknemerService;
 
 @Controller
 @RequestMapping("/werknemers")
+@SessionAttributes("werknemer")
 public class WerknemerController {
 
     private static final String WERKNEMER_VIEW = "werknemers/werknemershierarchie";
@@ -31,7 +34,7 @@ public class WerknemerController {
     private static final String REDIRECT_URL_NA_WIJZIGEN = 
 	    "redirect:/werknemers/werknemershierarchie/{id}";
     private static final String REDIRECT_URL_NA_LOCKING_EXCEPTION = 
-	    "redirect:/werknemers/werknemershierarchie/{werknemer}?optimisticlockingexception=true";
+	    "redirect:/werknemers/werknemershierarchie/{id}";
     
     private final WerknemerService werknemerService;
     private final JobtitelService jobtitelService;
@@ -67,25 +70,28 @@ public class WerknemerController {
 	    modelAndView.addObject(werknemer);
 	}
 	return modelAndView;
-    }
+    }   
     
     @PostMapping("{werknemer}/opslag")
     String updateSalaris(@Valid Werknemer werknemer, BindingResult bindingResult,
-	    RedirectAttributes redirectAttributes) {
+	    RedirectAttributes redirectAttributes, SessionStatus sessionStatus) {
 	if (bindingResult.hasErrors()) {
 	    return OPSLAG_VIEW;
 	}
 	long id = werknemer.getId();
 	BigDecimal opslag = werknemer.getOpslag();
 	try {
-	    werknemerService.geefOpslag(id, opslag);
+	    werknemerService.geefOpslag(werknemer, opslag);
 	    redirectAttributes
 	    	.addAttribute("id", id)
 	    	.addAttribute("update", true);
+	    sessionStatus.setComplete();
 	    return REDIRECT_URL_NA_WIJZIGEN;
 	} catch (ObjectOptimisticLockingFailureException ex) {
 	    redirectAttributes
-	    	.addAttribute("id", id);
+	    	.addAttribute("id", id)
+	    	.addAttribute("optimisticlockingexception", true);
+	    sessionStatus.setComplete();
 	    return REDIRECT_URL_NA_LOCKING_EXCEPTION;
 	}
     }

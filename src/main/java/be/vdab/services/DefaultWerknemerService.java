@@ -57,15 +57,10 @@ public class DefaultWerknemerService implements WerknemerService {
     
     @Override
     @ModifyingTransactionalServiceMethod
-    public void geefOpslag(long id, BigDecimal opslag) {
-	Optional<Werknemer> optionalWerknemer
-		= Optional.ofNullable(werknemerRepository.findOne(id));
-	if (optionalWerknemer.isPresent()) {
-	    Werknemer werknemer = optionalWerknemer.get();
-	    BigDecimal huidigeSalaris = werknemer.getSalaris();
-	    werknemer.setSalaris(huidigeSalaris.add(opslag));
-	    werknemerRepository.save(werknemer);
-	}
+    public void geefOpslag(Werknemer werknemer, BigDecimal opslag) {
+	BigDecimal huidigeSalaris = werknemer.getSalaris();
+	werknemer.setSalaris(huidigeSalaris.add(opslag));
+	werknemerRepository.save(werknemer);
     }
 
     @Override

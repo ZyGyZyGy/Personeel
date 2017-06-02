@@ -20,7 +20,7 @@ public interface WerknemerService {
     
     Optional<Werknemer> findWerknemerMetHoogsteTitel();
     
-    void geefOpslag(long id, BigDecimal opslag);
+    void geefOpslag(Werknemer werknemer, BigDecimal opslag);
     
     List<Werknemer> findByJobtitel(long id);
 }
