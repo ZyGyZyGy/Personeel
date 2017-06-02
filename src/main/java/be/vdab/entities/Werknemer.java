@@ -1,4 +1,4 @@
-package be.vdab.entities; 
+package be.vdab.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,7 +31,7 @@ import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "werknemers")
-@NamedEntityGraph(name = "Werknemer.metOndergeschikten",
+@NamedEntityGraph(name = "Werknemer.metOndergeschikten", 
 	attributeNodes = @NamedAttributeNode("ondergeschikten"))
 public class Werknemer implements Serializable {
 
@@ -40,38 +40,38 @@ public class Werknemer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @NotBlank
     @Length(min = 1, max = 50)
     private String familienaam;
-    
+
     @NotBlank
     @Length(min = 1, max = 50)
     private String voornaam;
-    
+
     @Email
     private String email;
-    
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "chefid")
     private Werknemer chef;
-    
+
     @OneToMany(mappedBy = "chef")
     private Set<Werknemer> ondergeschikten;
-    
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "jobtitelid")
     private Jobtitel jobtitel;
-    
+
     @NumberFormat(style = Style.NUMBER)
     private BigDecimal salaris;
-    
+
     @Transient
     @NotNull
     @DecimalMin("1")
     @Digits(integer = 10, fraction = 2)
     private BigDecimal opslag;
-    
+
     @Version
     private long versie;
 
@@ -93,10 +93,6 @@ public class Werknemer implements Serializable {
 
     public long getId() {
 	return id;
-    }
-
-    public void setId(long id) {
-	this.id = id;
     }
 
     public String getVoornaam() {
@@ -130,13 +126,13 @@ public class Werknemer implements Serializable {
     public void setChef(Werknemer chef) {
 	this.chef = chef;
     }
-    
+
     public Set<Werknemer> getOndergeschikten() {
 	return Collections.unmodifiableSet(ondergeschikten);
     }
 
     public Jobtitel getJobtitel() {
-        return jobtitel;
+	return jobtitel;
     }
 
     public BigDecimal getSalaris() {
@@ -146,17 +142,42 @@ public class Werknemer implements Serializable {
     public void setSalaris(BigDecimal salaris) {
 	this.salaris = salaris;
     }
-    
+
     public BigDecimal getOpslag() {
-        return opslag;
+	return opslag;
     }
 
     public void setOpslag(BigDecimal opslag) {
-        this.opslag = opslag;
+	this.opslag = opslag;
     }
 
     public long getVersie() {
 	return versie;
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((email == null) ? 0 : email.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (!(obj instanceof Werknemer))
+	    return false;
+	Werknemer other = (Werknemer) obj;
+	if (email == null) {
+	    if (other.email != null)
+		return false;
+	} else if (!email.equals(other.email))
+	    return false;
+	return true;
     }
 
 }

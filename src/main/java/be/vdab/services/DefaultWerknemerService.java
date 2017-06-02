@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 import be.vdab.entities.Werknemer;
 import be.vdab.repositories.WerknemerRepository;
 
-@Service
+@ReadOnlyTransactionalService
 public class DefaultWerknemerService implements WerknemerService {
 
     private final WerknemerRepository werknemerRepository;
@@ -19,6 +17,7 @@ public class DefaultWerknemerService implements WerknemerService {
     }
 
     @Override
+    @ModifyingTransactionalServiceMethod
     public void create(Werknemer werknemer) {
 	werknemerRepository.save(werknemer);
     }
@@ -30,11 +29,13 @@ public class DefaultWerknemerService implements WerknemerService {
     }
     
     @Override
+    @ModifyingTransactionalServiceMethod
     public void update(Werknemer werknemer) {
 	werknemerRepository.save(werknemer);
     }
     
     @Override
+    @ModifyingTransactionalServiceMethod
     public void delete(long id) {
 	Optional<Werknemer> optionalWerknemer
 		= Optional.ofNullable(werknemerRepository.findOne(id));
@@ -55,6 +56,7 @@ public class DefaultWerknemerService implements WerknemerService {
     }
     
     @Override
+    @ModifyingTransactionalServiceMethod
     public void geefOpslag(long id, BigDecimal opslag) {
 	Optional<Werknemer> optionalWerknemer
 		= Optional.ofNullable(werknemerRepository.findOne(id));
@@ -64,6 +66,11 @@ public class DefaultWerknemerService implements WerknemerService {
 	    werknemer.setSalaris(huidigeSalaris.add(opslag));
 	    werknemerRepository.save(werknemer);
 	}
+    }
+
+    @Override
+    public List<Werknemer> findByJobtitel(long id) {
+	return werknemerRepository.findByJobtitel(id);
     }
     
 }

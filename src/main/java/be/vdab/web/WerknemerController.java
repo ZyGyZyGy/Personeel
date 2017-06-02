@@ -1,6 +1,7 @@
 package be.vdab.web;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import be.vdab.entities.Jobtitel;
 import be.vdab.entities.Werknemer;
+import be.vdab.services.JobtitelService;
 import be.vdab.services.WerknemerService;
 
 @Controller
@@ -31,9 +34,11 @@ public class WerknemerController {
 	    "redirect:/werknemers/werknemershierarchie/{werknemer}?optimisticlockingexception=true";
     
     private final WerknemerService werknemerService;
+    private final JobtitelService jobtitelService;
     
-    WerknemerController(WerknemerService werknemerService) {
+    WerknemerController(WerknemerService werknemerService, JobtitelService jobtitelService) {
 	this.werknemerService = werknemerService;
+	this.jobtitelService = jobtitelService;
     }
     
     @GetMapping("werknemershierarchie")
@@ -86,8 +91,23 @@ public class WerknemerController {
     }
     
     @GetMapping("jobtitels")
-    String toonJobtitels() {
-	return JOBTITELS_VIEW;
+    ModelAndView toonJobtitels() {
+	return new ModelAndView(JOBTITELS_VIEW, "jobtitels", jobtitelService.findAll());
+    }
+    
+    @GetMapping("jobtitels/{jobtitel}")
+    ModelAndView findAlleWerknemersMetJobtitel(@PathVariable Jobtitel jobtitel) {
+	ModelAndView modelAndView = new ModelAndView(JOBTITELS_VIEW);
+	modelAndView
+		.addObject("jobtitels", jobtitelService.findAll())
+		.addObject("aangeklikteJobtitel", jobtitel);
+	List<Werknemer> werknemers = werknemerService.findByJobtitel(jobtitel.getId());
+	if (!werknemers.isEmpty()) {
+	    modelAndView.addObject("werknemers", werknemers);
+	} else {
+	    modelAndView.addObject("fout", "Geen werknemers gevonden");
+	}
+	return modelAndView;
     }
     
 }

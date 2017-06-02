@@ -24,46 +24,65 @@ public class Jobtitel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-    
+
     @NotBlank
     @Length(min = 1, max = 50)
     private String naam;
-    
+
     @OneToMany(mappedBy = "jobtitel")
     private Set<Werknemer> werknemers;
-    
+
     @Version
     private long versie;
 
     public Jobtitel() {
-	
+
     }
-    
+
     public Jobtitel(long id, String naam) {
 	Id = id;
 	this.naam = naam;
     }
 
     public long getId() {
-        return Id;
-    }
-
-    public void setId(long id) {
-        Id = id;
+	return Id;
     }
 
     public String getNaam() {
-        return naam;
+	return naam;
     }
 
     public void setNaam(String naam) {
-        this.naam = naam;
+	this.naam = naam;
     }
 
     public Set<Werknemer> getWerknemers() {
-        return Collections.unmodifiableSet(werknemers);
+	return Collections.unmodifiableSet(werknemers);
     }
 
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((naam == null) ? 0 : naam.hashCode());
+	return result;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (!(obj instanceof Jobtitel))
+	    return false;
+	Jobtitel other = (Jobtitel) obj;
+	if (naam == null) {
+	    if (other.naam != null)
+		return false;
+	} else if (!naam.equals(other.naam))
+	    return false;
+	return true;
+    }
 
 }

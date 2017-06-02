@@ -199,3 +199,11 @@ blockquote {
 .pagineren a:hover {
 	text-decoration: underline;
 }
+
+.inlineHoofding {
+	display: inline;
+	margin: 10px;
+}
+
+
+
